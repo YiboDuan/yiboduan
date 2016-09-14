@@ -1,0 +1,4 @@
+---
+- name: jayme
+  git_secret: 2a047b0c-7a38-11e6-8b77-86f30ca893d3
+...
