@@ -27,8 +27,8 @@ app.use(bodyParser.json());
 // app routing TODO: refactor to dynamically serve content and setup socket listening
 app.use('/', express.static('./app'))
 app.use('/trace-race', express.static('../jayme/app'));
-require('../jayme/app.js')(io)
-app.use('/jigrambe', express.static('../jigrambe'))
+require('../jayme/app.js')(io);
+app.use('/jigrambe', express.static('../jigrambe/app'));
 // router
 // =============================================================================
 
