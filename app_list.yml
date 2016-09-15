@@ -1,6 +1,0 @@
----
-- name: jayme
-  git_secret: 2a047b0c-7a38-11e6-8b77-86f30ca893d3
-- name: yiboduan
-  git_secret: 2535d97a-7a44-11e6-8b77-86f30ca893d3
-...

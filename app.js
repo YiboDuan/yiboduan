@@ -43,22 +43,16 @@ var exec = require('child_process').exec;
 
 // receive json from git webhook
 router.route('/push').post(function(req, res) {
-    for(a in app_list) {
-        if (a.git_secret === req.headers['x-github-delivery']) {
-            var cmd = `cd ~/${a.name} && git pull && sleep 5 && npm install && pm2 restart app`
-            console.log(req);
-            exec(cmd, function (error, stdout, stderr) {
-                console.log('stdout: ' + stdout);
-                console.log('stderr: ' + stderr);
-                if (error !== null) {
-                  console.log('exec error: ' + error);
-                }
-            });
-            res.sendStatus(200);
-            return;
+    var cmd = `cd ~/${req.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`
+    console.log(req);
+    exec(cmd, function (error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+          console.log('exec error: ' + error);
         }
-    }
-    res.sendStatus(401)
+    });
+    res.sendStatus(200)
 });
 
 app.use('/api', router);
