@@ -3,7 +3,10 @@ module.exports = function(router) {
 
     // receive json from git webhook
     router.route('/api/push').post(function(req, res) {
-        console.log(req);
+        console.log(req.headers)
+        console.log(req.body);
+        console.log(req.headers['x-hub-signature'])
+
         var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`
         exec(cmd, function (error, stdout, stderr) {
             console.log('stdout: ' + stdout);
