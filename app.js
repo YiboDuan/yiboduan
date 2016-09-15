@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use('/', express.static('./app'))
 app.use('/trace-race', express.static('../jayme/app'));
 require('../jayme/app.js')(io)
-
+app.use('/jigrambe', express.static('../jigrambe'))
 // router
 // =============================================================================
 
@@ -43,8 +43,11 @@ var exec = require('child_process').exec;
 
 // receive json from git webhook
 router.route('/push').post(function(req, res) {
-    var cmd = `cd ~/${req.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`
     console.log(req);
+    console.log(req.repository);
+    console.log('********************');
+    console.log(req['repository']);
+    var cmd = `cd ~/${req.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`
     exec(cmd, function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
