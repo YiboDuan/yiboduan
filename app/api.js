@@ -10,13 +10,13 @@ module.exports = function(router) {
                             .digest('hex');
             var signature = 'sha1=' + hash;
             if(signature !== req.headers['x-hub-signature']) {
-                res.sendStatus(500);
+                res.sendStatus(401);
                 return;
             }
         }
 
         // go to project directory, pull and restart
-        var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`;
+        var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && cd ~/yiboduan && npm install && pm2 restart app`;
         exec(cmd, function (error, stdout, stderr) {
             console.log('stdout: ' + stdout);
             console.log('stderr: ' + stderr);
