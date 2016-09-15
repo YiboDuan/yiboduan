@@ -2,7 +2,7 @@ module.exports = function(router) {
     var exec = require('child_process').exec;
 
     // receive json from git webhook
-    router.route('/push').post(function(req, res) {
+    router.route('/api/push').post(function(req, res) {
         console.log(req);
         var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`
         exec(cmd, function (error, stdout, stderr) {

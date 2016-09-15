@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var yaml = require('js-yaml');
 var fs   = require('fs');
+var router = express.Router();
 
 // Get document, or throw exception on error
 // try {
@@ -32,9 +33,8 @@ app.use('/jigrambe', express.static('../jigrambe/app'));
 
 // router
 // =============================================================================
-var api_router = express.Router();
-require('./app/api.js')(api_router);
-app.use('/api', api_router);
+require('./app/api.js')(router);
+app.use('/', router);
 
 http.listen(80, function() {
     console.log('app running in port 80');
