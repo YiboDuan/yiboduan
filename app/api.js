@@ -6,7 +6,7 @@ module.exports = function(router) {
         console.log(process.env.SECRET_TOKEN);
         if(req.headers['x-hub-signature'] !== undefined) {
             const hash = crypto.createHmac('sha1', process.env.SECRET_TOKEN)
-                            .update('wtf man')
+                            .update(JSON.stringify(req.body))
                             .digest('hex');
             console.log('****************************');
             console.log(req.headers['x-hub-signature']);
