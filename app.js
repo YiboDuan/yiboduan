@@ -2,12 +2,12 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-yaml = require('js-yaml');
-fs   = require('fs');
+var yaml = require('js-yaml');
+var fs   = require('fs');
 
 // Get document, or throw exception on error
 // try {
-//   var app_list = yaml.safeLoad(fs.readFileSync('./app_list.yml', 'utf8'));
+//   var app_list = yaml.safeLoad(fs.readFileSync('./something.yml', 'utf8'));
 //   console.log(app_list);
 // } catch (e) {
 //   console.log(e);
@@ -27,35 +27,14 @@ app.use(bodyParser.json());
 // app routing TODO: refactor to dynamically serve content and setup socket listening
 app.use('/', express.static('./app'))
 app.use('/trace-race', express.static('../jayme/app'));
-require('../jayme/app.js')(io);
+require('../jayme/app.js')(router, io);
 app.use('/jigrambe', express.static('../jigrambe/app'));
+
 // router
 // =============================================================================
-
-var router = express.Router();              // get an instance of the express Router
-
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
-});
-
-var exec = require('child_process').exec;
-
-// receive json from git webhook
-router.route('/push').post(function(req, res) {
-    console.log(req);
-    var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`
-    exec(cmd, function (error, stdout, stderr) {
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        if (error !== null) {
-          console.log('exec error: ' + error);
-        }
-    });
-    res.sendStatus(200)
-});
-
-app.use('/api', router);
+var api_router = express.Router();
+require('./app/api.js')(api_router);
+app.use('/api', api_router);
 
 http.listen(80, function() {
     console.log('app running in port 80');
