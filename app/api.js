@@ -6,6 +6,7 @@ module.exports = function(router) {
         console.log(req.headers)
         console.log(req.body);
         console.log(req.headers['x-hub-signature'])
+        // wow
 
         var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`
         exec(cmd, function (error, stdout, stderr) {
