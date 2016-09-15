@@ -3,9 +3,6 @@ module.exports = function(router) {
     var crypto = require('crypto');
     // receive json from git webhook
     router.route('/api/push').post(function(req, res) {
-        console.log(req.headers)
-        console.log(req.body);
-
         if(req.headers['x-hub-signature'] !== undefined) {
             const hash = crypto.createHmac('sha1', process.env.SECRET_TOKEN)
                    .update(req.body)
