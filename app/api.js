@@ -5,13 +5,14 @@ module.exports = function(router) {
     router.route('/api/push').post(function(req, res) {
         if(req.headers['x-hub-signature'] !== undefined) {
             const hash = crypto.createHmac('sha1', process.env.SECRET_TOKEN)
-                   .update(req.body)
+                   .update(JSON.stringify(req.body))
                    .digest('hex');
-            console.log(req.headers['x-hub-signature'])
             console.log('sha1=' + hash);
+            console.log('****************************');
+            console.log(req.headers['x-hub-signature']);
         }
 
-        var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`
+        var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`;
         exec(cmd, function (error, stdout, stderr) {
             console.log('stdout: ' + stdout);
             console.log('stderr: ' + stderr);
@@ -19,6 +20,6 @@ module.exports = function(router) {
               console.log('exec error: ' + error);
             }
         });
-        res.sendStatus(200)
+        res.sendStatus(200);
     });
 }
