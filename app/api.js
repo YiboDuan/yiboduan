@@ -3,18 +3,19 @@ module.exports = function(router) {
     var crypto = require('crypto');
     // receive json from git webhook
     router.route('/api/push').post(function(req, res) {
-        console.log(process.env.SECRET_TOKEN);
+        // authenticate
         if(req.headers['x-hub-signature'] !== undefined) {
             const hash = crypto.createHmac('sha1', process.env.SECRET_TOKEN)
-                            .update(JSON.stringify(req.body))
+                            .update(JSON.stringify(req.body)) // need to do this because of bodyParser
                             .digest('hex');
-            console.log('****************************');
-            console.log(req.headers['x-hub-signature']);
-            console.log('****************************');
-            console.log('sha1=' + hash);
-            console.log('****************************');
+            var signature = 'sha1=' + hash;
+            if(signature !== req.headers['x-hub-signature']) {
+                res.sendStatus(500);
+                return;
+            }
         }
 
+        // go to project directory, pull and restart
         var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && npm install && pm2 restart app`;
         exec(cmd, function (error, stdout, stderr) {
             console.log('stdout: ' + stdout);
