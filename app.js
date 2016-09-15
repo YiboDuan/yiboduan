@@ -6,12 +6,12 @@ yaml = require('js-yaml');
 fs   = require('fs');
 
 // Get document, or throw exception on error
-try {
-  var app_list = yaml.safeLoad(fs.readFileSync('./app_list.yml', 'utf8'));
-  console.log(app_list);
-} catch (e) {
-  console.log(e);
-}
+// try {
+//   var app_list = yaml.safeLoad(fs.readFileSync('./app_list.yml', 'utf8'));
+//   console.log(app_list);
+// } catch (e) {
+//   console.log(e);
+// }
 
 // middleware
 app.use(function(req, res, next) {
