@@ -30,6 +30,7 @@ app.use('/', express.static('./app'))
 app.use('/trace-race', express.static('../jayme/app'));
 require('../jayme/app.js')(router, io);
 app.use('/jigrambe', express.static('../jigrambe/app'));
+app.use('/beta-battles', express.static('../betabattles/app'));
 
 // router
 // =============================================================================
