@@ -37,8 +37,9 @@ app.use('/beta-battles', express.static('../betabattles/app'));
 require('./app/api.js')(router);
 app.use('/', router);
 
-http.listen(8080, function() {
-    console.log('app running in port 80');
+var port = 80;
+http.listen(port, function() {
+    console.log('app running in port ' + port);
 })
 
 module.exports = app;
