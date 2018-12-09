@@ -2,8 +2,8 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var yaml = require('js-yaml');
-var fs   = require('fs');
+// var yaml = require('js-yaml');
+// var fs   = require('fs');
 var router = express.Router();
 
 // Get document, or throw exception on error
@@ -26,18 +26,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // app routing TODO: refactor to dynamically serve content and setup socket listening
-app.use('/', express.static('./app'))
-app.use('/trace-race', express.static('../jayme/app'));
-require('../jayme/app.js')(router, io);
-app.use('/jigrambe', express.static('../jigrambe/app'));
+// app.use('/', express.static('./app'))
+// app.use('/trace-race', express.static('../jayme/app'));
+// require('../jayme/app.js')(router, io);
+app.use('/betabattles', express.static('../betabattles/client'));
+require('../betabattles/server/init.js')(router, io);
 
 // router
 // =============================================================================
 require('./app/api.js')(router);
 app.use('/', router);
 
-http.listen(80, function() {
-    console.log('app running in port 80');
+var port = 8080;
+http.listen(port, function() {
+    console.log(`app running in port ${port}`);
 })
 
 module.exports = app;
