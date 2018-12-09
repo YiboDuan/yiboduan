@@ -2,8 +2,8 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var yaml = require('js-yaml');
-var fs   = require('fs');
+// var yaml = require('js-yaml');
+// var fs   = require('fs');
 var router = express.Router();
 
 // Get document, or throw exception on error
@@ -30,7 +30,8 @@ app.use('/', express.static('./app'))
 app.use('/trace-race', express.static('../jayme/app'));
 require('../jayme/app.js')(router, io);
 app.use('/jigrambe', express.static('../jigrambe/app'));
-app.use('/beta-battles', express.static('../betabattles/app'));
+app.use('/betabattles', express.static('../betabattles/client'));
+require('../betabattles/server/init.js')(router, io);
 
 // router
 // =============================================================================
