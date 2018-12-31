@@ -1,0 +1,15 @@
+// PM2 is the tool we use for running and managing node apps
+// http://pm2.keymetrics.io/docs/usage/application-declaration/
+
+{
+  "apps" : [
+    {
+      "name"        : "yiboduan",
+      "script"      : "./app.js",
+      "watch"       : true,
+      "env": {
+        "NODE_ENV": "prod"
+      }
+    }
+  ]
+}

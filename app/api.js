@@ -16,7 +16,7 @@ module.exports = function(router) {
         }
 
         // go to project directory, pull and restart
-        var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && cd ~/yiboduan && npm install && pm2 restart app`;
+        var cmd = `cd ~/${req.body.repository.name} && git pull && sleep 5 && cd ~/yiboduan && npm install && pm2 restart yiboduan`;
         exec(cmd, function (error, stdout, stderr) {
             console.log('stdout: ' + stdout);
             console.log('stderr: ' + stderr);
