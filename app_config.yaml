@@ -1,0 +1,19 @@
+app_list:
+  - repo_name: betabattles
+    client_files_relative_path: client
+    git_ssh_url: git@github.com:jigrassi/betabattles.git
+    route: /betabattles
+    server_entry_point_path: server/init.js
+  - repo_name: jayme
+    client_files_relative_path: app
+    git_ssh_url: git@github.com:jigrassi/jayme.git
+    route: /trace-race
+    server_entry_point_path: app.js
+
+environments:
+  dev:
+    port: 8080
+    pull_latest_code_on_startup: false
+  prod:
+    port: 80
+    pull_latest_code_on_startup: true
